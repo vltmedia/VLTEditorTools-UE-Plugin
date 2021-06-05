@@ -1,0 +1,26 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "VLT Editor Tool",
+	"Description": "Editor tools created by VLT Media including local file io, layout tools, and other Quality of Life tools.",
+	"Category": "Editor",
+	"CreatedBy": "VLT Media LLC",
+	"CreatedByURL": "vltmedia.com",
+	"DocsURL": "https://vltwiki.com/en/plugins-scripts/ue/VLTEditorTools",
+	"MarketplaceURL": "",
+	"SupportURL": "https://vltwiki.com/en/plugins-scripts/ue/VLTEditorTools",
+	"EngineVersion": "4.25.0",
+	"CanContainContent": true,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "VLTEditorTool",
+			"Type": "Editor",
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms": [
+				"Win64"
+			]
+		}
+	]
+}
