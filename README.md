@@ -2,6 +2,8 @@
 <br>
 <img alt="Unreal Engine" src="https://img.shields.io/badge/unrealengine-%23313131.svg?style=for-the-badge&logo=unrealengine&logoColor=white"/>
 
+<a href="https://github.com/vltmedia/VLTEditorTools-UE-Plugin"><img alt="GitHub" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" /></a>
+
 Editor tools created by VLT Media including local file io, layout tools, and other Quality of Life tools.
 
 # Install
