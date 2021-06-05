@@ -1,5 +1,4 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-#define LOCTEXT_NAMESPACE "AssetTypeActions"
 
 #include "VLTEditorToolBPLibrary.h"
 #include "VLTEditorTool.h"
@@ -11,6 +10,7 @@
 #include "EditorStyleSet.h"
 #include "Brushes/SlateImageBrush.h"
 #include "Misc/Paths.h"
+#define LOCTEXT_NAMESPACE "AssetTypeActions"
 
 
 
