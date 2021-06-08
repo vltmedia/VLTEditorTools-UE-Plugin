@@ -30,6 +30,12 @@ class UVLTEditorToolBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Create Process With Arguments", Keywords = "VLTEditorTool Create Process Arguments IO bat bash"), Category = "VLT - File IO")
+	static void CreateProcessWithArguments(FString URL, FString Parms, bool bLaunchDetached, bool bLaunchHidden, bool bLaunchReallyHidden, int32 PriorityModifier, FString OptionalWorkingDirectory);
+	
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Texture Source Path", Keywords = "VLTEditorTool Get Texture Source Path IO bat bash"), Category = "VLT - File IO")
+	static FString GetTextureSourcePath(UTexture* Source);
+	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Copy Directory to Directory", Keywords = "VLTEditorTool File IO Copy Directory"), Category = "VLT - File IO")
 	static void CopyDirectoryToDirectory(FString Source, FString Target, bool Overwrite = false);
 	

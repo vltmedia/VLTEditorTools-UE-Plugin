@@ -10,6 +10,8 @@
 #include "EditorStyleSet.h"
 #include "Brushes/SlateImageBrush.h"
 #include "Misc/Paths.h"
+#include "GenericPlatform/GenericPlatformProcess.h"
+#include "EditorFramework/AssetImportData.h"
 #define LOCTEXT_NAMESPACE "AssetTypeActions"
 
 
@@ -21,6 +23,30 @@ UVLTEditorToolBPLibrary::UVLTEditorToolBPLibrary(const FObjectInitializer& Objec
 
 }
 
+
+void UVLTEditorToolBPLibrary::CreateProcessWithArguments(FString URL,  FString Parms, bool bLaunchDetached, bool bLaunchHidden, bool bLaunchReallyHidden, int32 PriorityModifier, FString OptionalWorkingDirectory)
+{
+
+    FPlatformProcess::CreateProc(*URL, *Parms, bLaunchDetached, bLaunchHidden, bLaunchReallyHidden, nullptr, PriorityModifier, *OptionalWorkingDirectory, nullptr, nullptr);
+}
+
+FString UVLTEditorToolBPLibrary::GetTextureSourcePath(UTexture* Source)
+{
+    FString SourceFilePath = "";
+
+    if (NULL != Source && NULL != Source->AssetImportData)
+    {
+        const FAssetImportInfo& AssetImportInfo = Source->AssetImportData->SourceData;
+
+        if (AssetImportInfo.SourceFiles.Num() >= 1)
+        {
+            SourceFilePath = AssetImportInfo.SourceFiles[0].RelativeFilename;
+            UE_LOG(LogTemp, Warning, TEXT("source file path is %s"), *SourceFilePath);
+            
+        }
+    }
+    return SourceFilePath;
+}
 
 void UVLTEditorToolBPLibrary::CopyDirectoryToDirectory(FString Source, FString Target, bool Overwrite)
 {
@@ -45,7 +71,9 @@ FString UVLTEditorToolBPLibrary::RelativePathToFullPath(FString Source)
 {
 
     IPlatformFile& F = FPlatformFileManager::Get().GetPlatformFile();
-    return F.ConvertToAbsolutePathForExternalAppForRead(*Source);
+    //FPaths::ProjectContentDir() + Source;
+    return FPaths::ProjectContentDir() + Source;
+    //return F.ConvertToAbsolutePathForExternalAppForRead(*Source);
 }
 
 

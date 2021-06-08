@@ -45,28 +45,30 @@ void FVLTEditorToolModule::FillPulldownMenu(FMenuBuilder& menuBuilder)
 void FVLTEditorToolModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-	VLTET_EditorCommands::Register();
 
-	PluginCommands = MakeShareable(new FUICommandList);
-	PluginCommands->MapAction(
-		VLTET_EditorCommands::Get().TestCommand,
-		FExecuteAction::CreateRaw(this, &FVLTEditorToolModule::TestAction)
-	);
+	// Use this to spawn the menu buttons
+	//VLTET_EditorCommands::Register();
 
-	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
+	//PluginCommands = MakeShareable(new FUICommandList);
+	//PluginCommands->MapAction(
+	//	VLTET_EditorCommands::Get().TestCommand,
+	//	FExecuteAction::CreateRaw(this, &FVLTEditorToolModule::TestAction)
+	//);
 
-	{       
-		MenuExtender = MakeShareable(new FExtender);
+	//FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 
-		TSharedPtr<FExtender> IconToolbarExtender = MakeShareable(new FExtender);
-		IconToolbarExtender->AddToolBarExtension("Content",
-			EExtensionHook::Before,
-			PluginCommands,
-			FToolBarExtensionDelegate::CreateRaw(this, &FVLTEditorToolModule::AddToolbarButton));
-		MenuExtender->AddMenuBarExtension("Window", EExtensionHook::After, NULL, FMenuBarExtensionDelegate::CreateRaw(this, &FVLTEditorToolModule::MakePulldownMenu));
-		LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(IconToolbarExtender);
-		LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MenuExtender);
-	}
+	//{       
+	//	MenuExtender = MakeShareable(new FExtender);
+
+	//	TSharedPtr<FExtender> IconToolbarExtender = MakeShareable(new FExtender);
+	//	IconToolbarExtender->AddToolBarExtension("Content",
+	//		EExtensionHook::Before,
+	//		PluginCommands,
+	//		FToolBarExtensionDelegate::CreateRaw(this, &FVLTEditorToolModule::AddToolbarButton));
+	//	MenuExtender->AddMenuBarExtension("Window", EExtensionHook::After, NULL, FMenuBarExtensionDelegate::CreateRaw(this, &FVLTEditorToolModule::MakePulldownMenu));
+	//	LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(IconToolbarExtender);
+	//	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MenuExtender);
+	//}
 
 
 
@@ -97,17 +99,30 @@ void FVLTEditorToolModule::TestAction()
 
 	if (bpp->IsValidLowLevel()) {
 
-	
+		UE_LOG(LogTemp, Warning, TEXT("It Works 2!!!"));
+
 		if (bpp->GeneratedClass->IsChildOf(UEditorUtilityWidget::StaticClass()))
 		{
 		
+			UE_LOG(LogTemp, Warning, TEXT("It Works 3!!!"));
+
 			UEditorUtilityWidget* CDO = Cast<UEditorUtilityWidget>(bpp->GeneratedClass->GetDefaultObject());
 			
 			if (CDO->ShouldAutoRunDefaultAction())
 			{
+				UE_LOG(LogTemp, Warning, TEXT("It Works 4!!!"));
+
 				// This is an instant-run blueprint, just execute it
 				UEditorUtilityWidget* Instance = NewObject<UEditorUtilityWidget>(GetTransientPackage(), bpp->GeneratedClass);
 				Instance->ExecuteDefaultAction();
+				Instance->Run();
+				FName RegistrationName = FName(*(bpp->GetPathName() ));
+				FText DisplayName = FText::FromString(bpp->GetName());
+				FLevelEditorModule& LevelEditorModule = FModuleManager::GetModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
+				//FLevelEditorModule& LevelEditorModule = FModuleManager::GetModuleChecked<UEditorUtilityWidget>(TEXT("LevelEditor"));
+				LevelEditorModule.GetLevelEditorTabManager()->InvokeTab(RegistrationName);
+				UE_LOG(LogTemp, Warning, TEXT("It Works 5!!!"));
+
 			}
 			else
 			{
@@ -129,6 +144,8 @@ void FVLTEditorToolModule::TestAction()
 		FString alertt = "Failed!";
 		UVLTEditorToolBPLibrary::ShowEditorAlert(alertt, 0.1f, 0.5f, 5.0f);
 	}
+
+
 	/*UE_LOG(LogTemp, Warning, TEXT("Asset Name : %s"), bpp->GetName());
 	UE_LOG(LogTemp, Warning, TEXT("Long Package Name : %s"), bpp->GetPathName());
 
