@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#include "VLTET_MaterialHandler_BPLibrary.h"
 
 #include "HAL/PlatformFilemanager.h"
 #include "GenericPlatform/GenericPlatformFile.h"
 #include "AssetRegistryModule.h"
 #include "DDSLoader.h"
-#include "VLTET_MaterialHandler_BPLibrary.h"
 #include "VLTEditorToolBPLibrary.h"
 #include "Misc/Paths.h"
 #include "IImageWrapperModule.h"
@@ -15,27 +15,61 @@ void UVLTET_MaterialHandler_BPLibrary::NormalFromSelectedAssetTexture()
 {
 
 	TArray<FAssetData> assets = UVLTEditorToolBPLibrary::GetSelectedAssetsInContentBrowser();
-	auto focusasset = assets[0];
+	for (auto assett : assets) {
+		auto focusasset = assett;
+		auto currentasset = focusasset.GetAsset();
+		FString AssetFolder = focusasset.PackagePath.ToString().Replace(TEXT("/Game/"), *UVLTEditorToolBPLibrary::GetGameContentPath());
+
+		UTexture2D* currenttexture = Cast<UTexture2D>(currentasset);
+		FString texturesourcepath = FPaths::ConvertRelativePathToFull(UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture));
+		UE_LOG(LogTemp, Warning, TEXT("texturesourcepath : %s"), *texturesourcepath);
+
+		FString Basenamee = FPaths::GetCleanFilename(texturesourcepath);
+
+
+
+		FString outputfolder = UVLTET_MaterialHandler_BPLibrary::ConvertTexturePathTypeToAnotherPathType(AssetFolder + '/' + Basenamee, ETextureType::NORMAL);
+		//FString normalmaparguments = AssetFolder +"/"+ Basenamee +" "+ outputfolder;
+		FString normalmaparguments = "\"" + FPaths::ConvertRelativePathToFull(UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture)) + "\" \"" + outputfolder + "\"";
+
+		FString normalmapexe = FPaths::ProjectPluginsDir() + "VLTEditorTool/Content/Resources/normalmap.exe";
+		UE_LOG(LogTemp, Warning, TEXT("Args : %s"), *normalmaparguments);
+		UE_LOG(LogTemp, Warning, TEXT("Command : \"%s\" %s"), *normalmapexe, *normalmaparguments);
+
+		UVLTEditorToolBPLibrary::CreateProcessWithArguments(normalmapexe, normalmaparguments, false, false, false, 100, FPaths::ProjectPluginsDir());
+		//UE_LOG(LogTemp, Warning, TEXT("Texture Source Path : %s"), *currentasset);
+		UE_LOG(LogTemp, Warning, TEXT("Asset Source Path : %s"), *AssetFolder);
+	}
+
+}
+
+void UVLTET_MaterialHandler_BPLibrary::RoughnessFromSelectedAssetTexture()
+{
+
+	TArray<FAssetData> assets = UVLTEditorToolBPLibrary::GetSelectedAssetsInContentBrowser();
+	for (auto assett : assets) {
+	auto focusasset = assett;
 	auto currentasset = focusasset.GetAsset();
 	FString AssetFolder = focusasset.PackagePath.ToString().Replace(TEXT("/Game/"), *UVLTEditorToolBPLibrary::GetGameContentPath());
 
 	UTexture2D* currenttexture = Cast<UTexture2D>(currentasset); 
-	FString texturesourcepath =  UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture);
-	UE_LOG(LogTemp, Warning, TEXT("texturesourcepath : %s"), *texturesourcepath);
+	FString texturesourcepath =  FPaths::ConvertRelativePathToFull(UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture));
+	UE_LOG(LogTemp, Warning, TEXT("texturesourcepath : %s"), *FPaths::ConvertRelativePathToFull(UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture)));
 
 	FString Basenamee = FPaths::GetCleanFilename(texturesourcepath);
 
 
 
-	FString outputfolder = UVLTET_MaterialHandler_BPLibrary::ConvertTexturePathTypeToAnotherPathType(AssetFolder +'/'+ Basenamee, ETextureType::NORMAL);
-	FString normalmaparguments = AssetFolder +"/"+ Basenamee +" "+ outputfolder;
-	FString normalmapexe = FPaths::ProjectPluginsDir() + "VLTEditorTool/Content/Resources/normalmap.exe";
+	FString outputfolder = UVLTET_MaterialHandler_BPLibrary::ConvertTexturePathTypeToAnotherPathType(AssetFolder +'/'+ Basenamee, ETextureType::ROUGHNESS);
+	FString normalmaparguments = "\""+ FPaths::ConvertRelativePathToFull(UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture)) +"\" \""+ outputfolder+"\" Average"  ;
+	FString normalmapexe = FPaths::ProjectPluginsDir() + "VLTEditorTool/Content/Resources/GenerateRoughness/GenerateRoughnessMap.exe";
 	UE_LOG(LogTemp, Warning, TEXT("Args : %s"), *normalmaparguments);
+	UE_LOG(LogTemp, Warning, TEXT("Command : \"%s\" %s"), *normalmapexe, *normalmaparguments);
 
 	UVLTEditorToolBPLibrary::CreateProcessWithArguments(normalmapexe, normalmaparguments,false, false, false, 100, FPaths::ProjectPluginsDir());
 	//UE_LOG(LogTemp, Warning, TEXT("Texture Source Path : %s"), *currentasset);
 	UE_LOG(LogTemp, Warning, TEXT("Asset Source Path : %s"), *AssetFolder);
-
+	}
 
 }
 

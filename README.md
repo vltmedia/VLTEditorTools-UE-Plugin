@@ -23,7 +23,7 @@ Copy the VLTEditorTool folder into your Unreal Engine project's Plugins folder. 
 
 # Material Wizard EUI
 
-![materialwizardeui.png](https://vltwiki.com/images/materialwizardeui.png)
+![materialwizardeui.png](https://vltwiki.com/images/materialwizardeuiv1.2.0.png)
 An Editor UI Window that will help a user select a group of textures, then turn them into a ready to use PBR material instance.
 
 # Path

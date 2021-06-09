@@ -55,6 +55,9 @@ class VLTEDITORTOOL_API UVLTET_MaterialHandler_BPLibrary : public UBlueprintFunc
 	
 		UFUNCTION(BlueprintCallable, meta = (DisplayName = "Normal From Image", Keywords = "VLTEditorTool Normal From Image Texture Source Path IO bat bash"), Category = "VLT - Material & Texture IO")
 		static void NormalFromSelectedAssetTexture();
+			
+		UFUNCTION(BlueprintCallable, meta = (DisplayName = "Roughness From Image", Keywords = "VLTEditorTool Roughness From Image Texture Source Path IO bat bash"), Category = "VLT - Material & Texture IO")
+		static void RoughnessFromSelectedAssetTexture();
 
 	
 		UFUNCTION(BlueprintCallable, meta = (DisplayName = "Import Asset From Path", Keywords = "VLTEditorTool Get Texture Source Path IO bat bash"), Category = "VLT - File IO")
