@@ -28,7 +28,7 @@ void UVLTET_MaterialHandler_BPLibrary::NormalFromSelectedAssetTexture()
 
 
 
-		FString outputfolder = UVLTET_MaterialHandler_BPLibrary::ConvertTexturePathTypeToAnotherPathType(AssetFolder + '/' + Basenamee, ETextureType::NORMAL);
+		FString outputfolder = UVLTET_MaterialHandler_BPLibrary::ConvertTexturePathTypeToAnotherPathType(AssetFolder + '/' + Basenamee, ETextureType::NORMAL).Replace(TEXT(".jpg"), TEXT(".png"));
 		//FString normalmaparguments = AssetFolder +"/"+ Basenamee +" "+ outputfolder;
 		FString normalmaparguments = "\"" + FPaths::ConvertRelativePathToFull(UVLTEditorToolBPLibrary::GetTextureSourcePath(currenttexture)) + "\" \"" + outputfolder + "\"";
 
