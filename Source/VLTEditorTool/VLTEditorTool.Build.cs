@@ -27,7 +27,7 @@ public class VLTEditorTool : ModuleRules
 			{
 				"Core",
 				"CoreUObject", "Engine", "InputCore", "UnrealEd", "Blutility", "ContentBrowser", "AssetRegistry" ,
-			"Json", "JsonUtilities", "Slate", "SlateCore" , "EditorStyle","LevelEditor",    "UMGEditor",
+			"Json", "JsonUtilities", "Slate", "SlateCore" , "EditorStyle","LevelEditor",   	"EditorScriptingUtilities", "UMGEditor",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -40,7 +40,15 @@ public class VLTEditorTool : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"Core"
+				"Core",
+
+				"Projects",
+				"InputCore",
+				"UnrealEd",
+				"LevelEditor",
+				"EditorScriptingUtilities",
+				"EditorStyle",
+				"DesktopPlatform",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

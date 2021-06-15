@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "1.0.1",
 	"FriendlyName": "VLT Editor Tool",
 	"Description": "Editor tools created by VLT Media including local file io, layout tools, and other Quality of Life tools.",
 	"Category": "Editor",
@@ -20,6 +20,11 @@
 			"LoadingPhase": "PreLoadingScreen",
 			"WhitelistPlatforms": [
 				"Win64"
+			],
+			"AdditionalDependencies": [
+				"Engine",
+				"Blutility",
+				"EditorScriptingUtilities"
 			]
 		}
 	]
