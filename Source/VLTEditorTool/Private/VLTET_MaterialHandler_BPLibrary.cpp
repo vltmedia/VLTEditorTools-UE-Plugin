@@ -16,10 +16,25 @@
 #include "EditorAssetLibrary.h"
 #include "Materials/MaterialInstance.h"
 #include "Materials/MaterialInstanceConstant.h"
+#include "VLT_NormalMapGeneration.h"
+
+
+//static const float oneover255 = 1.0f / 255.0f;
+
+#ifndef min
+#define min(a,b)  ((a)<(b) ? (a) : (b))
+#endif
+#ifndef max
+#define max(a,b)  ((a)>(b) ? (a) : (b))
+#endif
+
+#define SQR(x)      ((x) * (x))
+#define LERP(a,b,c) ((a) + ((b) - (a)) * (c))
+
+
 
 void UVLTET_MaterialHandler_BPLibrary::NormalFromSelectedAssetTexture()
 {
-
 	TArray<FAssetData> assets = UVLTEditorToolBPLibrary::GetSelectedAssetsInContentBrowser();
 	for (auto assett : assets) {
 		auto focusasset = assett;
@@ -326,7 +341,8 @@ UTexture2D* UVLTET_MaterialHandler_BPLibrary::LoadTextureFromPath(const FString&
 	
 
 	IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
-	IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(GetJoyImageFormat(ImageFormat));
+	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(GetJoyImageFormat(ImageFormat));
+	//IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(GetJoyImageFormat(ImageFormat));
 
 	//Load From File
 	FString FullFilePath = FilePath;

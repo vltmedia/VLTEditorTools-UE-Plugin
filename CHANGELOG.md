@@ -38,3 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Function <u>GetTextureDimensionsFromPbrTexturePack</u>
   - Get the File size from a non empty texture in a  PBR Texture pack Struct.
+
+- Function <u>PBRTexturePackFromSelectedAssets</u>
+  - Get PBR Texture Pack From the Selected Assets in a content browser.
